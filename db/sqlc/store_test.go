@@ -92,13 +92,13 @@ func TestTransferTx(t *testing.T) {
 		existed[k] = true
 	}
 
-	updateAccount1, err := testQueries.GetAccount(context.Background(), account1.ID)
+	// check the final updated balance
+	updatedAccount1, err := testQueries.GetAccount(context.Background(), account1.ID)
 	require.NoError(t, err)
 
-	updateAccount2, err := testQueries.GetAccount(context.Background(), account2.ID)
+	updatedAccount2, err := testQueries.GetAccount(context.Background(), account2.ID)
 	require.NoError(t, err)
 
-	require.Equal(t, account1.Balance-int64(n)*amount, updateAccount1.Balance)
-	require.Equal(t, account2.Balance-int64(n)*amount, updateAccount2.Balance)
-
+	require.Equal(t, account1.Balance-int64(n)*amount, updatedAccount1.Balance)
+	require.Equal(t, account2.Balance+int64(n)*amount, updatedAccount2.Balance)
 }
