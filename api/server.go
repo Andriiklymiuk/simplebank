@@ -34,6 +34,7 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 		v.RegisterValidation("currency", validCurrency)
 	}
 	router.POST("/users", server.createUser)
+	router.POST("/users/login", server.loginUser)
 
 	router.POST("/accounts", server.createAccount)
 	router.GET("/accounts/:id", server.getAccount)
@@ -49,6 +50,7 @@ func (server *Server) Start(address string) error {
 	return server.router.Run(address)
 }
 
+// Error response is sent in nice format for the user
 func errorResponse(err error) gin.H {
 	return gin.H{"error": err.Error()}
 }
